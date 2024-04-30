@@ -11,7 +11,7 @@ class ListProjects extends ListRecords
 {
     protected static string $resource = ProjectResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make(),

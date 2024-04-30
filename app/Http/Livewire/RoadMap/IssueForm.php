@@ -80,7 +80,7 @@ class IssueForm extends Component implements HasForms
                                         return $query->where('users.id', auth()->user()->id);
                                     })->pluck('name', 'id')->toArray()
                                 )
-                                ->afterStateUpdated(fn(Closure $get) => $this->initProject($get('project_id')))
+                                ->afterStateUpdated(fn(\Filament\Forms\Get $get) => $this->initProject($get('project_id')))
                                 ->required(),
 
                             Forms\Components\Select::make('sprint_id')

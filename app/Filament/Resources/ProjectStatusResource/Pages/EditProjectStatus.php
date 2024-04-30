@@ -11,7 +11,7 @@ class EditProjectStatus extends EditRecord
 {
     protected static string $resource = ProjectStatusResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\ViewAction::make(),

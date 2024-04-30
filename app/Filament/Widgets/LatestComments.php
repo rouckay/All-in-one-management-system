@@ -93,7 +93,7 @@ class LatestComments extends BaseWidget
             Tables\Actions\Action::make('view')
                 ->label(__('View'))
                 ->icon('heroicon-s-eye')
-                ->color('secondary')
+                ->color('gray')
                 ->modalHeading(__('Comment details'))
                 ->modalButton(__('View ticket'))
                 ->form([

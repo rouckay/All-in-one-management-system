@@ -15,7 +15,7 @@ class Scrum extends Page implements HasForms
 {
     use InteractsWithForms, KanbanScrumHelper;
 
-    protected static ?string $navigationIcon = 'heroicon-o-view-boards';
+    protected static ?string $navigationIcon = 'heroicon-o-view-columns';
 
     protected static ?string $slug = 'scrum/{project}';
 
@@ -43,7 +43,7 @@ class Scrum extends Page implements HasForms
         $this->form->fill();
     }
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Action::make('manage-sprints')
@@ -57,7 +57,7 @@ class Scrum extends Page implements HasForms
                 ->button()
                 ->visible(fn() => $this->project->currentSprint)
                 ->label(__('Refresh'))
-                ->color('secondary')
+                ->color('gray')
                 ->action(function () {
                     $this->getRecords();
                     Filament::notify('success', __('Kanban board updated'));
@@ -65,12 +65,12 @@ class Scrum extends Page implements HasForms
         ];
     }
 
-    protected function getHeading(): string|Htmlable
+    public function getHeading(): string|Htmlable
     {
         return $this->scrumHeading();
     }
 
-    protected function getSubheading(): string|Htmlable|null
+    public function getSubheading(): string|Htmlable|null
     {
         return $this->scrumSubHeading();
     }

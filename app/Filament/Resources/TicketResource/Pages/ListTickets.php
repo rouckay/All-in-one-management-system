@@ -16,7 +16,7 @@ class ListTickets extends ListRecords
         return true;
     }
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make(),
