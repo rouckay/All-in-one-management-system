@@ -97,7 +97,7 @@ class ManageGeneralSettings extends SettingsPage
         ];
     }
 
-    protected function getSaveFormAction(): Action
+    public function getSaveFormAction(): Action
     {
         return parent::getSaveFormAction()->label(__('Save'));
     }
