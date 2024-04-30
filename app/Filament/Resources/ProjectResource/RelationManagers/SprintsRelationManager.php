@@ -10,9 +10,9 @@ use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
@@ -23,12 +23,12 @@ class SprintsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    public static function canViewForRecord(Model $ownerRecord): bool
+    public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
     {
         return $ownerRecord->type === 'scrum';
     }
 
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -58,14 +58,14 @@ class SprintsRelationManager extends RelationManager
                         Forms\Components\DatePicker::make('starts_at')
                             ->label(__('Sprint start date'))
                             ->reactive()
-                            ->afterStateUpdated(fn($state, Closure $set) => $set('ends_at', Carbon::parse($state)->addWeek()->subDay()))
-                            ->beforeOrEqual(fn(Closure $get) => $get('ends_at'))
+                            ->afterStateUpdated(fn($state, \Filament\Forms\Set $set) => $set('ends_at', Carbon::parse($state)->addWeek()->subDay()))
+                            ->beforeOrEqual(fn(\Filament\Forms\Get $get) => $get('ends_at'))
                             ->required(),
 
                         Forms\Components\DatePicker::make('ends_at')
                             ->label(__('Sprint end date'))
                             ->reactive()
-                            ->afterOrEqual(fn(Closure $get) => $get('starts_at'))
+                            ->afterOrEqual(fn(\Filament\Forms\Get $get) => $get('starts_at'))
                             ->required(),
 
                         Forms\Components\RichEditor::make('description')
@@ -75,7 +75,7 @@ class SprintsRelationManager extends RelationManager
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
             ->columns([
@@ -148,7 +148,7 @@ class SprintsRelationManager extends RelationManager
                             ->body(__('Sprint started at') . ' ' . $now)
                             ->actions([
                                 Action::make('board')
-                                    ->color('secondary')
+                                    ->color('gray')
                                     ->button()
                                     ->label(
                                         fn ()
@@ -185,7 +185,7 @@ class SprintsRelationManager extends RelationManager
 
                 Tables\Actions\Action::make('tickets')
                     ->label(__('Tickets'))
-                    ->color('secondary')
+                    ->color('gray')
                     ->icon('heroicon-o-ticket')
                     ->mountUsing(fn(Forms\ComponentContainer $form, Sprint $record) => $form->fill([
                         'tickets' => $record->tickets->pluck('id')->toArray()

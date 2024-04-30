@@ -12,9 +12,9 @@ use App\Models\Ticket;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -24,11 +24,11 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-archive';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
 
     protected static ?int $navigationSort = 1;
 
-    protected static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return __('Projects');
     }
@@ -38,7 +38,7 @@ class ProjectResource extends Resource
         return static::getNavigationLabel();
     }
 
-    protected static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): ?string
     {
         return __('Management');
     }
@@ -233,8 +233,8 @@ class ProjectResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('exportLogHours')
                         ->label(__('Export hours'))
-                        ->icon('heroicon-o-document-download')
-                        ->color('secondary')
+                        ->icon('heroicon-o-document-arrow-down')
+                        ->color('gray')
                         ->action(fn($record) => Excel::download(
                             new ProjectHoursExport($record),
                             'time_' . Str::slug($record->name) . '.csv',
@@ -247,8 +247,8 @@ class ProjectResource extends Resource
                             fn ($record)
                                 => ($record->type === 'scrum' ? __('Scrum board') : __('Kanban board'))
                         )
-                        ->icon('heroicon-o-view-boards')
-                        ->color('secondary')
+                        ->icon('heroicon-o-view-columns')
+                        ->color('gray')
                         ->url(function ($record) {
                             if ($record->type === 'scrum') {
                                 return route('filament.pages.scrum/{project}', ['project' => $record->id]);
@@ -256,7 +256,7 @@ class ProjectResource extends Resource
                                 return route('filament.pages.kanban/{project}', ['project' => $record->id]);
                             }
                         }),
-                ])->color('secondary'),
+                ])->color('gray'),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

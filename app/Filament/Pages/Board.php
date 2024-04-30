@@ -15,7 +15,7 @@ class Board extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-o-view-boards';
+    protected static ?string $navigationIcon = 'heroicon-o-view-columns';
 
     protected static string $view = 'filament.pages.board';
 
@@ -23,7 +23,7 @@ class Board extends Page implements HasForms
 
     protected static ?int $navigationSort = 4;
 
-    protected function getSubheading(): string|Htmlable|null
+    public function getSubheading(): string|Htmlable|null
     {
         return __("In this section you can choose one of your projects to show it's Scrum or Kanban board");
     }
@@ -33,12 +33,12 @@ class Board extends Page implements HasForms
         $this->form->fill();
     }
 
-    protected static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return __('Board');
     }
 
-    protected static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): ?string
     {
         return __('Management');
     }

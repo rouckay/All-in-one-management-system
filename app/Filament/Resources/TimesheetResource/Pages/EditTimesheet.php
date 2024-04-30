@@ -10,7 +10,7 @@ class EditTimesheet extends EditRecord
 {
     protected static string $resource = TimesheetResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\ViewAction::make(),

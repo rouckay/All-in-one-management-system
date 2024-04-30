@@ -36,13 +36,13 @@ class ViewTicket extends ViewRecord implements HasForms
 
     public $selectedCommentId;
 
-    public function mount($record): void
+    public function mount(int | string $record): void
     {
         parent::mount($record);
         $this->form->fill();
     }
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\Action::make('toggleSubscribe')
@@ -77,7 +77,7 @@ class ViewTicket extends ViewRecord implements HasForms
                 }),
             Actions\Action::make('share')
                 ->label(__('Share'))
-                ->color('secondary')
+                ->color('gray')
                 ->button()
                 ->icon('heroicon-o-share')
                 ->action(fn() => $this->dispatchBrowserEvent('shareTicket', [
@@ -128,7 +128,7 @@ class ViewTicket extends ViewRecord implements HasForms
             Actions\ActionGroup::make([
                 Actions\Action::make('exportLogHours')
                     ->label(__('Export time logged'))
-                    ->icon('heroicon-o-document-download')
+                    ->icon('heroicon-o-document-arrow-down')
                     ->color('warning')
                     ->visible(
                         fn() => $this->record->watchers->where('id', auth()->user()->id)->count()
@@ -148,7 +148,7 @@ class ViewTicket extends ViewRecord implements HasForms
                         $this->record->watchers->where('id', auth()->user()->id)->count()
                         && $this->record->hours()->count()
                     ))
-                ->color('secondary'),
+                ->color('gray'),
         ];
     }
 

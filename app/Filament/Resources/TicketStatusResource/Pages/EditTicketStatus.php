@@ -11,7 +11,7 @@ class EditTicketStatus extends EditRecord
 {
     protected static string $resource = TicketStatusResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\ViewAction::make(),

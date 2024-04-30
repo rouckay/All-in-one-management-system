@@ -10,7 +10,7 @@ class ViewProjectStatus extends ViewRecord
 {
     protected static string $resource = ProjectStatusResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\EditAction::make(),
